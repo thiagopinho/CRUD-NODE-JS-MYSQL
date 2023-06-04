@@ -12,5 +12,14 @@ module.exports = {
             });
         }
         res.json(json);
+    },
+    getByID: async (req, res) => {
+        let json = { error: '', result: {} };
+        let id = req.params.id;
+        let car = await CarService.getByID(id);
+        if (car) {
+            json.result = car;
+        }
+        res.json(json);
     }
 }
