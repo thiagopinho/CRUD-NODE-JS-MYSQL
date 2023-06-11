@@ -28,4 +28,40 @@ module.exports = {
 
         })
     },
+    insert: (model, plate) => {
+        return new Promise((accepted, rejected) => {
+            db.query('INSERT INTO cars (model, plate) VALUES (?, ?)',
+                [model, plate], (error, results) => {
+                    if (error) {
+                        rejected(error);
+                        return;
+                    }
+                    accepted(results.insertID);
+                });
+        });
+    },
+    update: (id, model, plate) => {
+        return new Promise((accepted, rejected) => {
+            db.query('UPDATE cars SET model = ?, plate = ? WHERE id = ?',
+                [model, plate, id], (error, results) => {
+                    if (error) {
+                        rejected(error);
+                        return;
+                    }
+                    accepted(results);
+                });
+        });
+    },
+    delete: (id) => {
+        return new Promise((accepted, rejected) => {
+            db.query('DELETE FROM cars WHERE id = ?',
+                [id], (error, results) => {
+                    if (error) {
+                        rejected(error);
+                        return;
+                    }
+                    accepted(results);
+                });
+        });
+    },
 };
